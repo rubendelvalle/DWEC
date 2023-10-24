@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<!--
+Somos los jefes de una empresa de informática y necesitamos crear la siquiente especificación de requisitos:
+
+    1. Tenemos un EMPLEADO que debe tener un NOMBRE (por defecto será una cadena vacía). Además, cada empeado tiene que estar
+    adscrito a un DEPARTAMENTO, cuyo pondremos como valor por defecto "Informatico"
+
+    2. También tenemos al director ejecutivo que estará basado en EMPLEADO pero que se añadira la propiedad de "Informes" 
+    (el valor por defecto será un array vacío)
+
+    3. El TRABAJADOR también heredará de EMPLEADO, incluyendo la propiedad de "Proyectos" (el valor por defecto también será un array vacío)
+
+    4. Un INGENIERO también estará basado en el TRABAJADOR pero, como es normal, se le añade la propiedad de "LenguajeProgramacion" 
+    (por defecto será una cadena vacía) y sobrescribirá cada vez la propiedad con el valor de "Ingeniería".
+
+    Crear los objetos descritos anteriormento y realiza pruebas de intanciar,mostrar informes (en el caso de que tengan) y todo
+    lo que creas necesario para comprobar el correcto funcionamiento del programa.   
+-->
+
+
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Estructuras Objetos Empleados</title>
+    <meta name="author" content="Antonio Camarena Ivars" />
+    <script>
+
+        //Empleado
+        // Clase Padre
+        function Empleado(nombre) {
+            this.nombre = nombre || '';
+            this.departamento = 'Informático';
+        }
+        // Director 
+        // Clase que hereda de Empleado
+        function Director(nombre) {
+            Empleado.call(this, nombre);
+            this.informes = [];
+        }
+
+        // Añade al prototipo que hereda de Empleado()
+        Director.prototype = new Empleado();
+
+        // Estabece el constructor de Director()
+        Director.prototype.constructor = Director;
+
+        // Trabajador 
+        // Clase que hereda de Empleado
+        function Trabajador(nombre) {
+            Empleado.call(this, nombre);
+            this.proyectos = [];
+        }
+
+        // Añade al prototipo que hereda de Empleado()
+        Trabajador.prototype = new Empleado();
+
+        // Estabece el constructor de Trabajador()
+        Trabajador.prototype.constructor = Trabajador;
+
+        // Ingeniero --------------------------------
+        // Clase que hereda de Trabajador
+        function Ingeniero(nombre) {
+            Trabajador.call(this, nombre);
+
+            this.LenguajeProgramacion = '';
+            this.departamento = 'Ingienería';
+        }
+
+        // Añade al prototipo que hereda de Trabajador()
+        Ingeniero.prototype = new Trabajador();
+
+        // Estabece el constructor de Ingeniero()
+        Ingeniero.prototype.constructor = Ingeniero;
+
+        // ------------------------------------------------------------------------------    
+        // INSTANCIANDO 
+        // Creando objetos del tipo Director
+        var director1 = new Director('Pepito');
+        var director2 = new Director('Manolo');
+        var director3 = new Director('Hortencia');
+
+        // Añadiendo Informes a director2
+        director2.informes.push('Informe producción enero.');
+        director2.informes.push('Informe producción febrero.');
+        director2.informes.push('Informe producción marzo.');
+        director3.informes.push('Informe despido becario.');
+
+        // Creando objetos del tipo Ingeniero
+        var ingeniero1 = new Ingeniero('Juan');
+        var ingeniero2 = new Ingeniero('Carmen');
+        var ingeniero3 = new Ingeniero('Pablo');
+        var ingeniero4 = new Ingeniero('Emilio');
+
+        // Añadiendo maquinaria a cada Ingeniero
+        ingeniero1.LenguajeProgramacion = 'JAVA ';
+        ingeniero2.LenguajeProgramacion = 'C++ ';
+        ingeniero3.LenguajeProgramacion = 'JS ';
+        ingeniero4.LenguajeProgramacion = 'HTML5 ';
+
+
+        // MOSTRANDO
+
+        // Mostrando Directores y sus informes (en el caso de que tengan)
+        var directores = [director1, director2, director3];
+        document.write('<br /><br />--------------********* NOMBRES DIRECTORES *********-------------');
+
+
+        for (x of directores) {
+            document.write('<br />Director → ' + x.nombre);
+            if (x.informes.length > 0) {
+                document.write('<br />--------------********* INFORMES de: ' + x.nombre + ' :');
+                for (y of x.informes) {
+                    document.write('<br />------------------------------********* ' + y);
+                }
+            }
+        }
+
+        // Mostrando Ingenieros y su maquinaria
+        var ingenieros = [ingeniero1, ingeniero2, ingeniero3, ingeniero4];
+        document.write('<br /><br />--------------********* INGENIEROS *********-------------');
+
+        for (let x of ingenieros) {
+            document.write('<br />----------------------------********* El ingeniero ' + x.nombre + ' usa el lenguaje de programación ' + x.LenguajeProgramacion + ' en el departamento ' + x.departamento);
+        }
+    </script>
+    <script src="./script.js"></script>
+</head>
+
+<body>
+
+</body>
+
+</html>
